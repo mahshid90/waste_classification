@@ -12,5 +12,3 @@ setup(name='waste_classification',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False)
-
-#pip install -e .
