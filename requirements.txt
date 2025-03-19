@@ -1,0 +1,12 @@
+tensorflow==2.16.2
+pillow
+kagglehub
+numpy==1.26.4
+matplotlib
+pandas==1.5.3
+scikit-learn
+fastapi
+uvicorn
+opencv-python
+# face-recognition
+python-multipart
