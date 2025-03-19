@@ -10,3 +10,4 @@ uvicorn
 opencv-python
 # face-recognition
 python-multipart
+starlette
