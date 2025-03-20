@@ -2,6 +2,7 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import Response
 from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.applications.resnet50 import preprocess_input
 import numpy as np
 import cv2
 import io
@@ -44,10 +45,13 @@ async def receive_image(img: UploadFile=File(...)):
     pil_img = pil_img.resize((384, 384))
 
     ### Step 6: Convert PIL Image to NumPy Array (TensorFlow Format)
-    img_array = img_to_array(pil_img) / 255.0  # Normalize pixel values (0-1)
+    img_array = img_to_array(pil_img)
 
     ### Step 7: Reshape to Model Input Format
     x = np.expand_dims(img_array, axis=0)  # (1, 384, 384, 3)
+
+    ### Step 8: Preprocess the Image for Model Compatibility
+    x = preprocess_input(x)
 
     ##Run prediction
 
@@ -55,10 +59,10 @@ async def receive_image(img: UploadFile=File(...)):
     print(y_pred)
     print(type(y_pred))
 
-    return {"paper":float(y_pred[0][0]),
+    return {"cardboard":float(y_pred[0][0]),
             "glass":float(y_pred[0][1]),
-            "plastic":float(y_pred[0][2]),
-            "metal":float(y_pred[0][3]),
-            "cardboard":float(y_pred[0][4]),
+            "metal":float(y_pred[0][2]),
+            "paper":float(y_pred[0][3]),
+            "plastic":float(y_pred[0][4]),
             "trash":float(y_pred[0][5])
     }
