@@ -59,10 +59,14 @@ async def receive_image(img: UploadFile=File(...)):
     print(y_pred)
     print(type(y_pred))
 
-    return {"cardboard":float(y_pred[0][0]),
-            "glass":float(y_pred[0][1]),
-            "metal":float(y_pred[0][2]),
-            "paper":float(y_pred[0][3]),
-            "plastic":float(y_pred[0][4]),
-            "trash":float(y_pred[0][5])
+    return {"battery":float(y_pred[0][0]),
+            "biological":float(y_pred[0][1]),
+            "cardboard":float(y_pred[0][2]),
+            "clothes":float(y_pred[0][3]),
+            "glass":float(y_pred[0][4]),
+            "metal":float(y_pred[0][5]),
+            "paper":float(y_pred[0][6]),
+            "plastic":float(y_pred[0][7]),
+            "shoes":float(y_pred[0][8]),
+            "trash":float(y_pred[0][9]),
     }
