@@ -2,24 +2,24 @@
 
 A Deep Learning Approach using ResNet and Transfer Learning
 
-## **📌 ****Project Summary**
+## 📌 **Project Summary**
 
 This project presents a complete **end-to-end deep learning pipeline** for **automated waste classification**, built to support **smart recycling** and promote **sustainability**.
 
 At its core is a modular, **two-stage image classification system** that uses a **Convolutional Neural Network (CNN)** architecture (ResNet50, pre-trained on ImageNet) to classify real-world waste images. The system includes both **backend and frontend components** for deployment and user interaction.
 
-### **🧠**** Two-Stage Classification System**
+### **🧠** Two-Stage Classification System
 
 The system is modular and built around a **two-stage image classification logic**:
 
-- 🗑️ **Primary Waste Classifier \
-** Predicts one of **10 general waste categories**, including plastic, paper, metal, clothes, trash, and glass. \
+- 🗑️ Primary Waste Classifier \
+ Predicts one of **10 general waste categories**, including plastic, paper, metal, clothes, trash, and glass.
 
 
-- 🍾 **Glass Subclassifier \
-** Triggered **if the primary model predicts ****glass**, and refines the prediction into: brown, green, and transparent.
+- 🍾 Glass Subclassifier
+ Triggered **if the primary model predicts glass**, and refines the prediction into: brown, green, and transparent.
 
-### **🧩 ****Modular Design Benefits**
+### 🧩 Modular Design Benefits**
 
 This architecture allows the system to:
 
@@ -29,11 +29,11 @@ This architecture allows the system to:
 
 - Serve predictions in real time via API for frontend integration or external use
 
-### **♻️**** AI for Sustainability**
+### **♻️** AI for Sustainability
 
 This project contributes to the broader goal of using AI for environmental impact by building automated waste classification systems. These models can enhance the efficiency of waste management systems, support smarter recycling initiatives, and reduce contamination in recycling streams.
 
-### **🏷️ ****Support for Recycling Programs**
+### 🏷️ **Support for Recycling Programs**
 
 By accurately classifying images into categories like plastic, glass, metal, or trash, the system can help power real-time sorting tools for **automated recycling facilities** or **smart waste bins**, enabling cleaner waste separation and more sustainable urban environments.
 
@@ -41,19 +41,19 @@ By accurately classifying images into categories like plastic, glass, metal, or 
 
 This project was developed to:
 
-- **Develop a deep learning model for automated waste recognition **using a labeled dataset of real-world garbage images. \
+- **Develop a deep learning model for automated waste recognition** using a labeled dataset of real-world garbage images. \
 
 
-- **Explore, clean, and understand** the dataset to uncover insights and ensure data quality. \
+- **Explore, clean, and understand** the dataset to uncover insights and ensure data quality.
 
 
-- **Apply image preprocessing and data augmentation** techniques to boost model generalization and robustness. \
+- **Apply image preprocessing and data augmentation** techniques to boost model generalization and robustness.
 
 
-- **Leverage transfer learning** with a ResNet-based architecture in TensorFlow to accelerate training and improve accuracy. \
+- **Leverage transfer learning** with a ResNet-based architecture in TensorFlow to accelerate training and improve accuracy.
 
 
-- **Address class imbalance** through the use of weighted loss functions, ensuring fair performance across all categories. \
+- **Address class imbalance** through the use of weighted loss functions, ensuring fair performance across all categories.
 
 
 - **Ensure reproducibility** through a structured, step-by-step pipeline that can be easily replicated or extended.
@@ -113,7 +113,7 @@ To prepare the dataset for training, we used the splitfolders library to split t
 
 Each subset is stored in its own directory and loaded using TensorFlow’s image_dataset_from_directory(), which automatically infers labels from folder names and prepares the data in batches.
 
-- **Training data** includes real-time data augmentation through the preprocess_train() pipeline. \
+- **Training data** includes real-time data augmentation through the preprocess_train() pipeline.
 
 
 - **Validation and test data** are processed using preprocess_val_test(), which applies resizing and normalization only.
@@ -128,16 +128,16 @@ To improve the model's ability to generalize to unseen data, a custom **data aug
 
 The augmentation techniques applied include:
 
-- **Random horizontal flipping** – mirrors images horizontally to simulate flipped perspectives \
+- **Random horizontal flipping** – mirrors images horizontally to simulate flipped perspectives
 
 
-- **Random rotation** – introduces rotational variance for orientation robustness \
+- **Random rotation** – introduces rotational variance for orientation robustness
 
 
-- **Random zoom** – simulates distance variation in image capture \
+- **Random zoom** – simulates distance variation in image capture
 
 
-- **Random contrast and brightness adjustments** – helps the model handle lighting inconsistencies \
+- **Random contrast and brightness adjustments** – helps the model handle lighting inconsistencies
 
 
 - **Random translation** – mimics slight shifts or misalignments in object placement
@@ -159,17 +159,17 @@ The dataset pipeline is constructed using tf.keras.utils.image_dataset_from_dire
 
 - **Batches** images efficiently
 
-- **Optionally shuffles** the dataset during loading \
+- **Optionally shuffles** the dataset during loading
 
 
 Preprocessing and augmentation layers are applied to each dataset using .map(), allowing them to run **on the fly** during training, without the need to store augmented images on disk.
 
 The code loads and prepares three datasets:
 
-- **Training dataset**: augmented using preprocess_train, which includes resizing, normalization, and data augmentation. \
+- **Training dataset**: augmented using preprocess_train, which includes resizing, normalization, and data augmentation.
 
 
-- **Validation and test datasets**: processed using preprocess_val_test, which applies only resizing and normalization to ensure consistent and fair evaluation. \
+- **Validation and test datasets**: processed using preprocess_val_test, which applies only resizing and normalization to ensure consistent and fair evaluation.
 
 
 Notably, the **test set is not shuffled**, preserving the original order of the images — this is important for reproducibility and for generating consistent predictions during evaluation or inference.
@@ -209,13 +209,13 @@ This results in:
 
 The model is trained over **50 epochs** using the previously compiled configuration. Several **callbacks** are integrated to optimize training and prevent overfitting:
 
-- **ModelCheckpoint** – saves the best-performing model based on validation loss \
+- **ModelCheckpoint** – saves the best-performing model based on validation loss
 
 
-- **EarlyStopping** – stops training if no improvement is observed over a set number of epochs \
+- **EarlyStopping** – stops training if no improvement is observed over a set number of epochs
 
 
-- **ReduceLROnPlateau** – lowers the learning rate dynamically when validation performance plateaus \
+- **ReduceLROnPlateau** – lowers the learning rate dynamically when validation performance plateaus
 
 
 Training is performed on the **augmented training dataset**, while validation is conducted on a clean dataset with only resizing and normalization. These strategies help the model generalize better and stabilize learning throughout the training process.
@@ -232,13 +232,13 @@ Model evaluation is performed on the **test set** to assess generalization perfo
 
 A custom evaluation function, evaluate_model_performance(), is used to assess and visualize the model’s performance. This function:
 
-- Generates a **classification report** using classification_report() from sklearn.metrics, including **precision**, **recall**, and **F1-score** for each class \
+- Generates a **classification report** using classification_report() from sklearn.metrics, including **precision**, **recall**, and **F1-score** for each class
 
 
-- Computes and plots a **confusion matrix** using seaborn.heatmap() to visualize the distribution of correct vs. incorrect predictions \
+- Computes and plots a **confusion matrix** using seaborn.heatmap() to visualize the distribution of correct vs. incorrect predictions
 
 
-- Applies a **custom colormap** via LinearSegmentedColormap to improve the interpretability of the matrix \
+- Applies a **custom colormap** via LinearSegmentedColormap to improve the interpretability of the matrix
 
 
 These evaluation steps provide a detailed understanding of how well the model performs across all 10 waste categories.
@@ -247,26 +247,25 @@ These evaluation steps provide a detailed understanding of how well the model pe
 
 #### **✅**** a. Key Performance Metrics**
 
-- **Overall Accuracy**: **96.5%** on the held-out test set of 3,954 samples \
+- **Overall Accuracy**: **96.5%** on the held-out test set of 3,954 samples
 
 
-- **Loss**: Final test loss is **0.1763 \
-**
+- **Loss**: Final test loss is **0.1763**
 
-- **Recall**: Overall recall is **96.4%**, indicating strong sensitivity across most classes \
+- **Recall**: Overall recall is **96.4%**, indicating strong sensitivity across most classes
 
 
-- **Macro-Averaged F1-Score**: **95%**, reflecting balanced performance across all classes, regardless of class size \
+- **Macro-Averaged F1-Score**: **95%**, reflecting balanced performance across all classes, regardless of class size
 
 
 - **Weighted-Averaged F1-Score**: **96%**, accounting for class imbalance by giving more influence to high-frequency categories
 
 #### **💪 b. Notable Strengths**
 
-- The model performs exceptionally well on **clothes**, the largest class, with **99% precision and recall**. \
+- The model performs exceptionally well on **clothes**, the largest class, with **99% precision and recall**.
 
 
-- High performance is also observed in **battery**, **biological**, **glass**, and **cardboard**, all achieving **95–98%** across precision, recall, and F1-score. \
+- High performance is also observed in **battery**, **biological**, **glass**, and **cardboard**, all achieving **95–98%** across precision, recall, and F1-score.
 
 
 #### **🧠 c. Areas for potential improvement**
@@ -306,66 +305,66 @@ Proceed to **data preprocessing and augmentation \
 
 To use the trained model for predicting a new image:
 
-1. **Load the image** using PIL.Image.open() or tf.keras.utils.load_img(). \
+1. **Load the image** using PIL.Image.open() or tf.keras.utils.load_img().
 
 
-2. **Resize** the image to 384×384 pixels (same size used during training). \
+2. **Resize** the image to 384×384 pixels (same size used during training).
 
 
-3. **Convert to array** and **reshape** it to match the input shape: (1, 384, 384, 3). \
+3. **Convert to array** and **reshape** it to match the input shape: (1, 384, 384, 3).
 
 
-4. **Normalize** pixel values to the [0, 1] range if not already handled. \
+4. **Normalize** pixel values to the [0, 1] range if not already handled.
 
 
-5. **Call model.predict()** to obtain class probabilities. \
+5. **Call model.predict()** to obtain class probabilities.
 
 
 6. Use np.argmax() to select the predicted class index.
 
 ### **🧰 Tech Stack**
 
-- **Language**: Python 3 \
+- **Language**: Python 3
 
 
 - **Deep Learning**: TensorFlow, Keras, ResNet50 (CNN, transfer learning from ImageNet) \
 
 
-- **Image Processing**: OpenCV, PIL, NumPy \
+- **Image Processing**: OpenCV, PIL, NumPy
 
 
-- **Data Handling**: Pandas \
+- **Data Handling**: Pandas
 
 
-- **Visualization**: Matplotlib \
+- **Visualization**: Matplotlib
 
 
-- **Dataset**: Garbage Classification Dataset (10 classes) \
+- **Dataset**: Garbage Classification Dataset (10 classes)
 
 
-- **API Backend**: FastAPI – serves real-time predictions via HTTP \
+- **API Backend**: FastAPI – serves real-time predictions via HTTP
 
 
-- **Web Frontend**: Streamlit – allows users to upload images and receive model predictions \
+- **Web Frontend**: Streamlit – allows users to upload images and receive model predictions
 
 
-- **Containerization**: Docker – ensures reproducibility across local and production environments \
+- **Containerization**: Docker – ensures reproducibility across local and production environments
 
 
-- **Deployment**: Compatible with cloud platforms (e.g., Render, Hugging Face Spaces, Railway) \
+- **Deployment**: Compatible with cloud platforms (e.g., Render, Hugging Face Spaces, Railway)
 
 
 💡 *For training and experimentation, it is recommended to run the notebook on ****Kaggle with GPU enabled**** (e.g., NVIDIA P100) to handle the computational load, especially during model fine-tuning.*
 
 ## **🚀 Future Improvements**
 
-- **Explore different fine-tuning strategies**, such as unfreezing more layers of ResNet50 or modifying the custom classification head \
+- **Explore different fine-tuning strategies**, such as unfreezing more layers of ResNet50 or modifying the custom classification head
 
 
-- **Expand the dataset**, particularly for underperforming categories like glass, metal, and trash \
+- **Expand the dataset**, particularly for underperforming categories like glass, metal, and trash
 
 
-- **Apply class-targeted data augmentation** to address visual similarity and class imbalance \
+- **Apply class-targeted data augmentation** to address visual similarity and class imbalance
 
 
 - **Further fine-tune the model** to improve generalization on visually ambiguous or overlapping classes
@@ -374,14 +373,14 @@ To use the trained model for predicting a new image:
 
 ### Figure 1 – Training History
 
-![Enter image alt description](Images/ycH_Image_1.png)
+![Enter image alt description](figures/history_ds3_v2.png)
 
-*Validation accuracy stabilizes around 96%, showing strong generalization with minimal overfitting.** \
+*Validation accuracy stabilizes around 96%, showing strong generalization with minimal overfitting.**
 *
 
 ### Figure 2 – Confusion Matrix
 
-![Enter image alt description](Images/haH_Image_2.png)
+![Enter image alt description](figures/confusion_matrix_ds3_v2.png)
 
 *Slight misclassifications between glass, plastic, and metal, but overall strong per-class performance.*
 
@@ -412,12 +411,12 @@ For this picture of a halved lime, the model gives the wrong classification of �
 ###
 # 🍾 Glass Color Classifier Model
 
-This model specializes in classifying **glass waste** into three subcategories: \
+This model specializes in classifying **glass waste** into three subcategories:
 brown, green, and transparent.
 
 It serves as the **second stage** in a **hierarchical classification system**:
 
-- **Option 1**: A user uploads a known glass item for direct subtype classification \
+- **Option 1**: A user uploads a known glass item for direct subtype classification
 
 
 - **Option 2**: The **primary waste model** predicts the image as glass, triggering this model to refine the prediction
