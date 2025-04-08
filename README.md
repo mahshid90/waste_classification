@@ -19,7 +19,7 @@ The system is modular and built around a **two-stage image classification logic*
 - 🍾 Glass Subclassifier
  Triggered **if the primary model predicts glass**, and refines the prediction into: brown, green, and transparent.
 
-### 🧩 Modular Design Benefits**
+### 🧩 Modular Design Benefits
 
 This architecture allows the system to:
 
@@ -29,19 +29,19 @@ This architecture allows the system to:
 
 - Serve predictions in real time via API for frontend integration or external use
 
-### **♻️** AI for Sustainability
+### ♻️ AI for Sustainability
 
 This project contributes to the broader goal of using AI for environmental impact by building automated waste classification systems. These models can enhance the efficiency of waste management systems, support smarter recycling initiatives, and reduce contamination in recycling streams.
 
-### 🏷️ **Support for Recycling Programs**
+### 🏷️ Support for Recycling Programs
 
 By accurately classifying images into categories like plastic, glass, metal, or trash, the system can help power real-time sorting tools for **automated recycling facilities** or **smart waste bins**, enabling cleaner waste separation and more sustainable urban environments.
 
-## **🎯 Purpose**
+## 🎯 Purpose
 
 This project was developed to:
 
-- **Develop a deep learning model for automated waste recognition** using a labeled dataset of real-world garbage images. \
+- **Develop a deep learning model for automated waste recognition** using a labeled dataset of real-world garbage images.
 
 
 - **Explore, clean, and understand** the dataset to uncover insights and ensure data quality.
@@ -62,9 +62,9 @@ Below is a precise breakdown of what each section of code does and how it works.
 
 # 🗑️ Primary Waste Classifier Model
 
-## **📘 Step-by-Step Notebook Walkthrough**
+## 📘 Step-by-Step Notebook Walkthrough
 
-### **🔍 1. Data Setup & Exploration**
+### 🔍 1. Data Setup & Exploration**
 
 **Acknowledgments/sources**: the code in our project is indebted to the notebook “Imbalanced Garbage Classification | ResNet50” by Farzad Nekouei, available at [https://www.kaggle.com/code/farzadnekouei/imbalanced-garbage-classification-resnet50](https://www.kaggle.com/code/farzadnekouei/imbalanced-garbage-classification-resnet50) and the accompanying code to the article “Managing Household Waste Through Transfer Learning” (Suman Kunwar, *Industrial and Domestic Waste Management (4:1), 14-22*, [https://tecnoscientifica.com/journal/idwm/article/view/408](https://tecnoscientifica.com/journal/idwm/article/view/408)). We use a slightly modified version of the dataset “Garbage Dataset” by Suman Kunwar, available at [https://www.kaggle.com/datasets/sumn2u/garbage-classification-v2](https://www.kaggle.com/datasets/sumn2u/garbage-classification-v2).
 
@@ -83,7 +83,7 @@ To perform an initial visual inspection of the data, the notebook uses a combina
 load_img() from Keras is also used for basic image loading and format inspection. These visualizations act as a quick sanity check to validate the structure and integrity of the dataset before moving into preprocessing and model training.
 
 
-### **🧹 2. Data Cleaning & Validation**
+### 🧹 2. Data Cleaning & Validation
 
 Before feeding the data into a deep learning model, the notebook performs essential cleaning steps to ensure consistency and quality across the dataset.
 
@@ -95,9 +95,9 @@ The tensorflow model we use later only recognizes a certain subset of image file
 
 Once validation is complete, the dataset is **reorganized into a clean working directory**. All valid images are copied into this new structure for downstream processing, while any unnecessary or incompatible files from the original directory are deleted. This ensures the model has access to only clean, consistent data throughout training.
 
-### **🧾 3. Data Preprocessing**
+### 🧾 3. Data Preprocessing
 
-#### **📄 a. Creating a Structured Pandas DataFrame**
+#### 📄 a. Creating a Structured Pandas DataFrame
 
 The code loops through all categories and constructs a flat list of image file paths and their corresponding labels.
 
@@ -107,7 +107,7 @@ This structured format (filepath, label) is ideal for manipulation, visualizatio
 
 **Batch Processing**: Instead of processing the entire dataset at once (which can be inefficient and memory-intensive), the data is divided into smaller chunks called *batches*. Setting batch_size = 64 means the model will process 64 images at a time before updating its weights.
 
-#### **📊 b. Stratified Data Splitting & Class Balancing**
+#### 📊 b. Stratified Data Splitting & Class Balancing
 
 To prepare the dataset for training, we used the splitfolders library to split the data into **training (70%)**, **validation (10%)**, and **test (20%)** subsets. This method performs a **stratified split** by preserving class distribution across all subsets, based on the original directory structure.
 
@@ -122,7 +122,7 @@ We confirmed that the class distribution remains consistent across all subsets, 
 
 To further mitigate class imbalance, **class weights** are computed and passed to the model during training. These weights ensure that underrepresented classes contribute proportionally to the loss function, promoting fairness across categories.
 
-#### **🧪 c. Data Augmentation Pipeline**
+#### 🧪 c. Data Augmentation Pipeline
 
 To improve the model's ability to generalize to unseen data, a custom **data augmentation pipeline** is built using **TensorFlow preprocessing layers** (tf.keras.layers). These transformations simulate real-world variability in image capture, such as orientation, lighting, and positioning.
 
@@ -144,14 +144,13 @@ The augmentation techniques applied include:
 
 These layers are defined inside a Sequential model and applied directly to the training dataset during batch loading, ensuring augmentations occur **on the fly** during training. This keeps the data pipeline efficient and avoids the need to store multiple augmented copies on disk.
 
-#### 🖼️ **d. Resizing & Normalization**
+#### 🖼️ d. Resizing & Normalization
 
 To meet the input requirements of the ResNet architecture, all images are resized to **384×384 pixels**, ensuring consistent input dimensions for the model. Additionally, pixel values are **normalized from [0, 255] to [0, 1]** using a Rescaling(1./255) layer within TensorFlow’s preprocessing Sequential model.
 
 Since normalization is already integrated into the preprocessing pipeline, there is no need to apply it manually or repeat it elsewhere. This streamlined approach ensures that the model consistently receives well-prepared, standardized input during both training and evaluation.
 
-###  \
-**🔁 4. Dataset Pipeline with Tensorflow**
+### 🔁 4. Dataset Pipeline with Tensorflow
 
 The dataset pipeline is constructed using tf.keras.utils.image_dataset_from_directory(), which provides a convenient way to load and batch images directly from their directory structure. This function:
 
@@ -175,7 +174,7 @@ The code loads and prepares three datasets:
 Notably, the **test set is not shuffled**, preserving the original order of the images — this is important for reproducibility and for generating consistent predictions during evaluation or inference.
 
 
-### **🏗️ 5. Model Building – Custom ResNet50**
+### 🏗️ 5. Model Building – Custom ResNet50
 
 The model architecture is built using **transfer learning** with a pre-trained **ResNet50** as the base. The ResNet50 model is loaded with include_top=False to remove its original classification layers, and its weights are initialized from **ImageNet**.
 
@@ -205,7 +204,7 @@ This results in:
 
 - **15 million trainable parameters**
 
-### 🏋️** 6. Model Training with Callbacks**
+### 🏋️ 6. Model Training with Callbacks
 
 The model is trained over **50 epochs** using the previously compiled configuration. Several **callbacks** are integrated to optimize training and prevent overfitting:
 
@@ -220,7 +219,7 @@ The model is trained over **50 epochs** using the previously compiled configurat
 
 Training is performed on the **augmented training dataset**, while validation is conducted on a clean dataset with only resizing and normalization. These strategies help the model generalize better and stabilize learning throughout the training process.
 
-### **💾 7. Model Saving & Evaluation**
+### 💾 7. Model Saving & Evaluation
 
 After training, the final model is saved in .keras format for future reuse, fine-tuning, or deployment.
 
@@ -243,9 +242,9 @@ A custom evaluation function, evaluate_model_performance(), is used to assess an
 
 These evaluation steps provide a detailed understanding of how well the model performs across all 10 waste categories.
 
-### **📊 8. Evaluation Outcomes**
+### 📊 8. Evaluation Outcomes
 
-#### **✅**** a. Key Performance Metrics**
+#### ✅ a. Key Performance Metrics
 
 - **Overall Accuracy**: **96.5%** on the held-out test set of 3,954 samples
 
@@ -260,7 +259,7 @@ These evaluation steps provide a detailed understanding of how well the model pe
 
 - **Weighted-Averaged F1-Score**: **96%**, accounting for class imbalance by giving more influence to high-frequency categories
 
-#### **💪 b. Notable Strengths**
+#### 💪 b. Notable Strengths
 
 - The model performs exceptionally well on **clothes**, the largest class, with **99% precision and recall**.
 
@@ -268,7 +267,7 @@ These evaluation steps provide a detailed understanding of how well the model pe
 - High performance is also observed in **battery**, **biological**, **glass**, and **cardboard**, all achieving **95–98%** across precision, recall, and F1-score.
 
 
-#### **🧠 c. Areas for potential improvement**
+#### 🧠 c. Areas for potential improvement
 
 **Metal**, **plastic**, and **trash** show **slightly lower F1-scores (89–93%)**, which may be due to:
 
@@ -280,7 +279,7 @@ These classes could benefit from **targeted data augmentation** or **class-speci
 
 Although the model performs well on **glass** overall in the test metrics, **real-world tests revealed inconsistent predictions for glass items**. This suggests that the model may struggle with certain subtypes or variations of glass in practice.
 
-## **🔁 Reproducibility Steps**
+## 🔁 Reproducibility Steps
 
 To replicate this notebook:
 
@@ -301,7 +300,7 @@ Proceed to **data preprocessing and augmentation \
 
 - *(Optional)* Tune hyperparameters
 
-## **🔮 Making Predictions on New Images**
+## 🔮 Making Predictions on New Images
 
 To use the trained model for predicting a new image:
 
@@ -322,7 +321,7 @@ To use the trained model for predicting a new image:
 
 6. Use np.argmax() to select the predicted class index.
 
-### **🧰 Tech Stack**
+### 🧰 Tech Stack
 
 - **Language**: Python 3
 
@@ -356,7 +355,7 @@ To use the trained model for predicting a new image:
 
 💡 *For training and experimentation, it is recommended to run the notebook on ****Kaggle with GPU enabled**** (e.g., NVIDIA P100) to handle the computational load, especially during model fine-tuning.*
 
-## **🚀 Future Improvements**
+## 🚀 Future Improvements
 
 - **Explore different fine-tuning strategies**, such as unfreezing more layers of ResNet50 or modifying the custom classification head
 
@@ -369,7 +368,7 @@ To use the trained model for predicting a new image:
 
 - **Further fine-tune the model** to improve generalization on visually ambiguous or overlapping classes
 
-## **📈 Figures & Key Insights**
+## 📈 Figures & Key Insights
 
 ### Figure 1 – Training History
 
@@ -405,8 +404,6 @@ For this picture, which is a piece of cardboard rolled up, we should get ‘card
 ![Enter image alt description](figures/shap_trash_04_lemon_400_ds3_v2.png)
 
 For this picture of a halved lime, the model gives the wrong classification of ‘metal’, when the correct class would have been ‘biological’. The Shapley values indicate that in particular the righthand part of the lime’s surface contribute to this classification. We can surmise that this is because of the reflections visible there, which the model might have taken to be indicative of a metal-like surface. Additional data augmentation with more varying light conditions as well as a larger dataset for the highly variable class of ‘biological’ waste might lead to improvement here.
-
-### Figure 6 – SHAP Trash
 
 ###
 # 🍾 Glass Color Classifier Model
