@@ -294,9 +294,11 @@ To replicate this notebook:
 
 - Start with **data loading and validation**
 
-- Use the splitfolders function to automatically split the dataset into **train**, **validation**, and **test** directories with stratified class distribution \
-Proceed to **data preprocessing and augmentation \
-**Continue with **model building, training, and evaluation**
+- Use the splitfolders function to automatically split the dataset into **train**, **validation**, and **test** directories with stratified class distribution
+
+- Proceed to **data preprocessing and augmentation
+
+- Continue with **model building, training, and evaluation**
 
 - *(Optional)* Tune hyperparameters
 
