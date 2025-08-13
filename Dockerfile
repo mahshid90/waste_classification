@@ -1,4 +1,6 @@
-FROM python:3.10.6-buster
+#FROM python:3.10.6-buster
+FROM python:3.10.6-bullseye
+
 WORKDIR /prod
 
 COPY waste_classification waste_classification
